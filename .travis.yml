@@ -7,4 +7,4 @@ addons:
   organization: alefanfi
   token: fae47b803191c687dc98db3ca0237e77537b6059
 script:
-- mvn verify -DfailIfNoTests=false -Dmaven.test.failure.ignore=true -Dtest=BookKeeperAdminTest sonar:sonar -Dsonar.projectKey=alefanfi_bookkeeper 
+ - mvn clean verify sonar:sonar
