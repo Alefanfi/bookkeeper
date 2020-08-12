@@ -38,7 +38,6 @@ import org.apache.distributedlog.util.DLUtils;
 import org.apache.distributedlog.util.Utils;
 import org.apache.zookeeper.AsyncCallback.Children2Callback;
 import org.apache.zookeeper.AsyncCallback.StatCallback;
-import org.apache.zookeeper.*;
 import org.apache.zookeeper.KeeperException.Code;
 import org.apache.zookeeper.ZooDefs.Ids;
 import org.junit.After;
