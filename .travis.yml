@@ -1,10 +1,10 @@
 language: java
 jdk:
-  - openjdk8
+  - openjdk11
 
 addons:
   sonarcloud:
     organization: alefanfi
     token: fae47b803191c687dc98db3ca0237e77537b6059
 script:
-  - mvn clean verify sonar:sonar
+  - mvn verify -DfailIfNoTests=false sonar:sonar -Dsonar.projectKey=alefanfi_bookkeeper
