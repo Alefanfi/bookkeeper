@@ -18,8 +18,9 @@
 
 package org.apache.bookkeeper.common.util;
 
-import java.util.concurrent.TimeUnit;
 import org.apache.bookkeeper.common.concurrent.FutureUtils;
+
+import java.util.concurrent.TimeUnit;
 
 /**
  * A mixin of {@link AsyncCloseable} and {@link AutoCloseable}.

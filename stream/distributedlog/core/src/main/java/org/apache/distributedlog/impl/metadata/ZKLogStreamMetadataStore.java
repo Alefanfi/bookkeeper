@@ -17,30 +17,8 @@
  */
 package org.apache.distributedlog.impl.metadata;
 
-import static java.nio.charset.StandardCharsets.UTF_8;
-import static com.google.common.base.Preconditions.checkArgument;
-import static com.google.common.base.Preconditions.checkNotNull;
-import static org.apache.distributedlog.DistributedLogConstants.EMPTY_BYTES;
-import static org.apache.distributedlog.DistributedLogConstants.UNASSIGNED_LOGSEGMENT_SEQNO;
-import static org.apache.distributedlog.metadata.LogMetadata.ALLOCATION_PATH;
-import static org.apache.distributedlog.metadata.LogMetadata.LAYOUT_VERSION;
-import static org.apache.distributedlog.metadata.LogMetadata.LOCK_PATH;
-import static org.apache.distributedlog.metadata.LogMetadata.LOGSEGMENTS_PATH;
-import static org.apache.distributedlog.metadata.LogMetadata.MAX_TXID_PATH;
-import static org.apache.distributedlog.metadata.LogMetadata.READ_LOCK_PATH;
-import static org.apache.distributedlog.metadata.LogMetadata.VERSION_PATH;
-
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.collect.Lists;
-import java.io.IOException;
-import java.net.URI;
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Optional;
-import java.util.concurrent.CancellationException;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.TimeUnit;
 import org.apache.bookkeeper.common.concurrent.FutureEventListener;
 import org.apache.bookkeeper.common.concurrent.FutureUtils;
 import org.apache.bookkeeper.common.util.OrderedScheduler;
@@ -54,14 +32,7 @@ import org.apache.distributedlog.ZooKeeperClient;
 import org.apache.distributedlog.ZooKeeperClient.ZooKeeperConnectionException;
 import org.apache.distributedlog.common.util.PermitManager;
 import org.apache.distributedlog.common.util.SchedulerUtils;
-import org.apache.distributedlog.exceptions.DLInterruptedException;
-import org.apache.distributedlog.exceptions.InvalidStreamNameException;
-import org.apache.distributedlog.exceptions.LockCancelledException;
-import org.apache.distributedlog.exceptions.LockingException;
-import org.apache.distributedlog.exceptions.LogExistsException;
-import org.apache.distributedlog.exceptions.LogNotFoundException;
-import org.apache.distributedlog.exceptions.UnexpectedException;
-import org.apache.distributedlog.exceptions.ZKException;
+import org.apache.distributedlog.exceptions.*;
 import org.apache.distributedlog.impl.ZKLogSegmentMetadataStore;
 import org.apache.distributedlog.lock.DistributedLock;
 import org.apache.distributedlog.lock.SessionLockFactory;
@@ -77,21 +48,32 @@ import org.apache.distributedlog.util.Transaction;
 import org.apache.distributedlog.util.Utils;
 import org.apache.distributedlog.zk.LimitedPermitManager;
 import org.apache.distributedlog.zk.ZKTransaction;
-import org.apache.zookeeper.AsyncCallback;
-import org.apache.zookeeper.CreateMode;
-import org.apache.zookeeper.KeeperException;
+import org.apache.zookeeper.*;
 import org.apache.zookeeper.KeeperException.Code;
-import org.apache.zookeeper.Op;
 import org.apache.zookeeper.Op.Create;
 import org.apache.zookeeper.Op.Delete;
-import org.apache.zookeeper.OpResult;
-import org.apache.zookeeper.ZKUtil;
-import org.apache.zookeeper.ZooKeeper;
 import org.apache.zookeeper.common.PathUtils;
 import org.apache.zookeeper.data.ACL;
 import org.apache.zookeeper.data.Stat;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.io.IOException;
+import java.net.URI;
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Optional;
+import java.util.concurrent.CancellationException;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.TimeUnit;
+
+import static com.google.common.base.Preconditions.checkArgument;
+import static com.google.common.base.Preconditions.checkNotNull;
+import static java.nio.charset.StandardCharsets.UTF_8;
+import static org.apache.distributedlog.DistributedLogConstants.EMPTY_BYTES;
+import static org.apache.distributedlog.DistributedLogConstants.UNASSIGNED_LOGSEGMENT_SEQNO;
+import static org.apache.distributedlog.metadata.LogMetadata.*;
 
 /**
  * zookeeper based {@link LogStreamMetadataStore}.

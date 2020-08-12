@@ -18,10 +18,11 @@ package org.apache.bookkeeper.stats.codahale;
 
 import com.codahale.metrics.Snapshot;
 import com.codahale.metrics.Timer;
-import java.util.Arrays;
-import java.util.concurrent.TimeUnit;
 import org.apache.bookkeeper.stats.OpStatsData;
 import org.apache.bookkeeper.stats.OpStatsLogger;
+
+import java.util.Arrays;
+import java.util.concurrent.TimeUnit;
 
 class CodahaleOpStatsLogger implements OpStatsLogger {
     final Timer success;

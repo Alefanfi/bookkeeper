@@ -13,20 +13,8 @@
  */
 package org.apache.bookkeeper.stream.server;
 
-import static com.google.common.base.Preconditions.checkNotNull;
-import static org.apache.bookkeeper.stream.storage.StorageConstants.ZK_METADATA_ROOT_PATH;
-
 import com.beust.jcommander.JCommander;
 import com.beust.jcommander.Parameter;
-import java.io.File;
-import java.net.InetAddress;
-import java.net.MalformedURLException;
-import java.net.UnknownHostException;
-import java.util.List;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
-import java.util.function.Supplier;
-import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.bookkeeper.clients.config.StorageClientSettings;
 import org.apache.bookkeeper.clients.impl.channel.StorageServerChannel;
@@ -46,16 +34,7 @@ import org.apache.bookkeeper.stream.server.conf.BookieConfiguration;
 import org.apache.bookkeeper.stream.server.conf.DLConfiguration;
 import org.apache.bookkeeper.stream.server.conf.StorageServerConfiguration;
 import org.apache.bookkeeper.stream.server.grpc.GrpcServerSpec;
-import org.apache.bookkeeper.stream.server.service.BookieService;
-import org.apache.bookkeeper.stream.server.service.BookieWatchService;
-import org.apache.bookkeeper.stream.server.service.ClusterControllerService;
-import org.apache.bookkeeper.stream.server.service.CuratorProviderService;
-import org.apache.bookkeeper.stream.server.service.DLNamespaceProviderService;
-import org.apache.bookkeeper.stream.server.service.GrpcService;
-import org.apache.bookkeeper.stream.server.service.RegistrationServiceProvider;
-import org.apache.bookkeeper.stream.server.service.RegistrationStateService;
-import org.apache.bookkeeper.stream.server.service.StatsProviderService;
-import org.apache.bookkeeper.stream.server.service.StorageService;
+import org.apache.bookkeeper.stream.server.service.*;
 import org.apache.bookkeeper.stream.storage.StorageContainerStoreBuilder;
 import org.apache.bookkeeper.stream.storage.StorageResources;
 import org.apache.bookkeeper.stream.storage.conf.StorageConfiguration;
@@ -72,6 +51,19 @@ import org.apache.commons.configuration.Configuration;
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.PropertiesConfiguration;
 import org.apache.distributedlog.DistributedLogConfiguration;
+
+import java.io.File;
+import java.net.InetAddress;
+import java.net.MalformedURLException;
+import java.net.UnknownHostException;
+import java.util.List;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
+import java.util.function.Supplier;
+import java.util.stream.Collectors;
+
+import static com.google.common.base.Preconditions.checkNotNull;
+import static org.apache.bookkeeper.stream.storage.StorageConstants.ZK_METADATA_ROOT_PATH;
 
 /**
  * A storage server is a server that run storage service and serving rpc requests.

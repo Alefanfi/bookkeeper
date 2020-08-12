@@ -18,14 +18,15 @@
 package org.apache.distributedlog.metadata;
 
 import com.google.common.annotations.Beta;
-import java.io.Closeable;
-import java.net.URI;
-import java.util.Optional;
-import java.util.concurrent.CompletableFuture;
 import org.apache.distributedlog.common.util.PermitManager;
 import org.apache.distributedlog.lock.DistributedLock;
 import org.apache.distributedlog.logsegment.LogSegmentMetadataStore;
 import org.apache.distributedlog.util.Transaction;
+
+import java.io.Closeable;
+import java.net.URI;
+import java.util.Optional;
+import java.util.concurrent.CompletableFuture;
 
 
 

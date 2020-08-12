@@ -20,7 +20,7 @@
  */
 package org.apache.bookkeeper.common.util.affinity.impl;
 
-import static com.google.common.base.Preconditions.checkArgument;
+import org.apache.commons.lang3.StringUtils;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
@@ -32,7 +32,7 @@ import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
-import org.apache.commons.lang3.StringUtils;
+import static com.google.common.base.Preconditions.checkArgument;
 
 /**
  * Discover the list of processors from /proc/cpuinfo.

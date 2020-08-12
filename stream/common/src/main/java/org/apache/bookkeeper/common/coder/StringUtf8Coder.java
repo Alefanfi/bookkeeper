@@ -18,14 +18,15 @@
 
 package org.apache.bookkeeper.common.coder;
 
-import static java.nio.charset.StandardCharsets.UTF_8;
-
 import com.google.common.base.Utf8;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufUtil;
-import java.nio.charset.StandardCharsets;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
+
+import java.nio.charset.StandardCharsets;
+
+import static java.nio.charset.StandardCharsets.UTF_8;
 
 /**
  * A coder that encodes strings in utf-8 format.

@@ -19,6 +19,7 @@
 package org.apache.bookkeeper.stream.storage.api.sc;
 
 import io.grpc.Channel;
+
 import java.util.concurrent.CompletableFuture;
 
 /**

@@ -18,8 +18,6 @@
  */
 package org.apache.bookkeeper.stream.server.service;
 
-import java.io.IOException;
-import java.util.Collections;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.bookkeeper.bookie.BookieStateManager;
 import org.apache.bookkeeper.clients.utils.NetUtils;
@@ -31,6 +29,9 @@ import org.apache.bookkeeper.discover.ZKRegistrationManager;
 import org.apache.bookkeeper.stats.StatsLogger;
 import org.apache.bookkeeper.stream.proto.common.Endpoint;
 import org.apache.bookkeeper.stream.server.conf.BookieConfiguration;
+
+import java.io.IOException;
+import java.util.Collections;
 
 /**
  * A service that manages the registration state for a given server.

@@ -17,27 +17,20 @@
  */
 package org.apache.distributedlog.config;
 
-import static com.google.common.base.Preconditions.checkNotNull;
-
 import com.google.common.collect.Lists;
-import java.io.File;
-import java.net.MalformedURLException;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.distributedlog.DistributedLogConfiguration;
-import org.apache.distributedlog.common.config.ConcurrentBaseConfiguration;
-import org.apache.distributedlog.common.config.ConcurrentConstConfiguration;
-import org.apache.distributedlog.common.config.ConfigurationSubscription;
-import org.apache.distributedlog.common.config.FileConfigurationBuilder;
-import org.apache.distributedlog.common.config.PropertiesConfigurationBuilder;
+import org.apache.distributedlog.common.config.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.io.File;
+import java.net.MalformedURLException;
+import java.util.*;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
+
+import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * Encapsulates creation of DynamicDistributedLogConfiguration instances. Ensures one instance per

@@ -18,35 +18,10 @@
 
 package org.apache.bookkeeper.statelib.impl.kv;
 
-import static com.google.common.base.Preconditions.checkNotNull;
-import static java.nio.charset.StandardCharsets.UTF_8;
-import static org.apache.bookkeeper.statelib.impl.rocksdb.RocksConstants.BLOCK_CACHE_SIZE;
-import static org.apache.bookkeeper.statelib.impl.rocksdb.RocksConstants.BLOCK_SIZE;
-import static org.apache.bookkeeper.statelib.impl.rocksdb.RocksConstants.DEFAULT_CHECKSUM_TYPE;
-import static org.apache.bookkeeper.statelib.impl.rocksdb.RocksConstants.DEFAULT_COMPACTION_STYLE;
-import static org.apache.bookkeeper.statelib.impl.rocksdb.RocksConstants.DEFAULT_COMPRESSION_TYPE;
-import static org.apache.bookkeeper.statelib.impl.rocksdb.RocksConstants.DEFAULT_LOG_LEVEL;
-import static org.apache.bookkeeper.statelib.impl.rocksdb.RocksConstants.DEFAULT_PARALLELISM;
-import static org.apache.bookkeeper.statelib.impl.rocksdb.RocksConstants.MAX_WRITE_BUFFERS;
-import static org.apache.bookkeeper.statelib.impl.rocksdb.RocksConstants.WRITE_BUFFER_SIZE;
-
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import com.google.common.primitives.SignedBytes;
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Set;
-import java.util.UUID;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.atomic.AtomicLongFieldUpdater;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -65,17 +40,20 @@ import org.apache.bookkeeper.statelib.impl.Bytes;
 import org.apache.bookkeeper.statelib.impl.rocksdb.RocksUtils;
 import org.apache.bookkeeper.statelib.impl.rocksdb.checkpoint.RocksCheckpointer;
 import org.apache.commons.lang3.tuple.Pair;
-import org.rocksdb.BlockBasedTableConfig;
-import org.rocksdb.ColumnFamilyDescriptor;
-import org.rocksdb.ColumnFamilyHandle;
-import org.rocksdb.ColumnFamilyOptions;
-import org.rocksdb.DBOptions;
-import org.rocksdb.FlushOptions;
-import org.rocksdb.RocksDB;
-import org.rocksdb.RocksDBException;
-import org.rocksdb.RocksIterator;
-import org.rocksdb.WriteBatch;
-import org.rocksdb.WriteOptions;
+import org.rocksdb.*;
+
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.*;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.atomic.AtomicLongFieldUpdater;
+
+import static com.google.common.base.Preconditions.checkNotNull;
+import static java.nio.charset.StandardCharsets.UTF_8;
+import static org.apache.bookkeeper.statelib.impl.rocksdb.RocksConstants.*;
 
 /**
  * A key/value store implemented using {@link http://rocksdb.org/}.

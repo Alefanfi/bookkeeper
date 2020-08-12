@@ -18,23 +18,6 @@
  */
 package org.apache.bookkeeper.metadata.etcd;
 
-import static java.nio.charset.StandardCharsets.UTF_8;
-import static org.apache.bookkeeper.metadata.etcd.EtcdUtils.getBookiesEndPath;
-import static org.apache.bookkeeper.metadata.etcd.EtcdUtils.getBookiesPath;
-import static org.apache.bookkeeper.metadata.etcd.EtcdUtils.getBucketsPath;
-import static org.apache.bookkeeper.metadata.etcd.EtcdUtils.getClusterInstanceIdPath;
-import static org.apache.bookkeeper.metadata.etcd.EtcdUtils.getCookiePath;
-import static org.apache.bookkeeper.metadata.etcd.EtcdUtils.getCookiesPath;
-import static org.apache.bookkeeper.metadata.etcd.EtcdUtils.getLayoutKey;
-import static org.apache.bookkeeper.metadata.etcd.EtcdUtils.getLedgersPath;
-import static org.apache.bookkeeper.metadata.etcd.EtcdUtils.getReadonlyBookiePath;
-import static org.apache.bookkeeper.metadata.etcd.EtcdUtils.getReadonlyBookiesPath;
-import static org.apache.bookkeeper.metadata.etcd.EtcdUtils.getScopeEndKey;
-import static org.apache.bookkeeper.metadata.etcd.EtcdUtils.getUnderreplicationPath;
-import static org.apache.bookkeeper.metadata.etcd.EtcdUtils.getWritableBookiePath;
-import static org.apache.bookkeeper.metadata.etcd.EtcdUtils.getWritableBookiesPath;
-import static org.apache.bookkeeper.metadata.etcd.EtcdUtils.msResult;
-
 import com.coreos.jetcd.Client;
 import com.coreos.jetcd.KV;
 import com.coreos.jetcd.Txn;
@@ -57,10 +40,6 @@ import com.coreos.jetcd.watch.WatchEvent.EventType;
 import com.coreos.jetcd.watch.WatchResponse;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.util.concurrent.UncheckedExecutionException;
-import java.util.UUID;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.TimeoutException;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
@@ -74,6 +53,14 @@ import org.apache.bookkeeper.meta.LedgerLayout;
 import org.apache.bookkeeper.versioning.LongVersion;
 import org.apache.bookkeeper.versioning.Version;
 import org.apache.bookkeeper.versioning.Versioned;
+
+import java.util.UUID;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
+
+import static java.nio.charset.StandardCharsets.UTF_8;
+import static org.apache.bookkeeper.metadata.etcd.EtcdUtils.*;
 
 /**
  * Etcd registration manager.

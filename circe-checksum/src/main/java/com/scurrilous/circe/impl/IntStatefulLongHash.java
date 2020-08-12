@@ -15,12 +15,12 @@
  ******************************************************************************/
 package com.scurrilous.circe.impl;
 
-import java.nio.ByteBuffer;
-
 import com.scurrilous.circe.StatefulHash;
 import com.scurrilous.circe.StatefulIntHash;
 import com.scurrilous.circe.StatefulLongHash;
 import com.scurrilous.circe.StatelessLongHash;
+
+import java.nio.ByteBuffer;
 
 /**
  * Promotes a {@link StatefulIntHash} to a {@link StatefulLongHash}.

@@ -17,8 +17,9 @@
  */
 package org.apache.distributedlog.util;
 
-import java.util.Optional;
 import org.apache.commons.cli.CommandLine;
+
+import java.util.Optional;
 
 /**
  * Utils to commandline.

@@ -18,10 +18,11 @@
 
 package org.apache.bookkeeper.clients.impl.internal.api;
 
-import java.util.List;
-import java.util.concurrent.CompletableFuture;
 import org.apache.bookkeeper.common.util.Revisioned;
 import org.apache.bookkeeper.stream.proto.storage.OneStorageContainerEndpointResponse;
+
+import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 /**
  * A client that talks to location servers to find locations of ranges and storage containers.

@@ -18,48 +18,15 @@
 
 package org.apache.bookkeeper.stream.storage.impl.service;
 
-import static org.apache.bookkeeper.stream.protocol.ProtocolConstants.CONTAINER_META_RANGE_ID;
-import static org.apache.bookkeeper.stream.protocol.ProtocolConstants.CONTAINER_META_STREAM_ID;
-import static org.apache.bookkeeper.stream.protocol.ProtocolConstants.ROOT_RANGE_ID;
-import static org.apache.bookkeeper.stream.protocol.ProtocolConstants.ROOT_STORAGE_CONTAINER_ID;
-import static org.apache.bookkeeper.stream.protocol.ProtocolConstants.ROOT_STREAM_ID;
-
 import com.google.common.collect.Lists;
-import java.util.List;
-import java.util.concurrent.CompletableFuture;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.bookkeeper.clients.impl.internal.api.StorageServerClientManager;
 import org.apache.bookkeeper.common.concurrent.FutureUtils;
 import org.apache.bookkeeper.common.util.OrderedScheduler;
-import org.apache.bookkeeper.stream.proto.kv.rpc.DeleteRangeRequest;
-import org.apache.bookkeeper.stream.proto.kv.rpc.DeleteRangeResponse;
-import org.apache.bookkeeper.stream.proto.kv.rpc.IncrementRequest;
-import org.apache.bookkeeper.stream.proto.kv.rpc.IncrementResponse;
-import org.apache.bookkeeper.stream.proto.kv.rpc.PutRequest;
-import org.apache.bookkeeper.stream.proto.kv.rpc.PutResponse;
-import org.apache.bookkeeper.stream.proto.kv.rpc.RangeRequest;
-import org.apache.bookkeeper.stream.proto.kv.rpc.RangeResponse;
-import org.apache.bookkeeper.stream.proto.kv.rpc.ResponseHeader;
-import org.apache.bookkeeper.stream.proto.kv.rpc.RoutingHeader;
-import org.apache.bookkeeper.stream.proto.kv.rpc.TxnRequest;
-import org.apache.bookkeeper.stream.proto.kv.rpc.TxnResponse;
-import org.apache.bookkeeper.stream.proto.storage.CreateNamespaceRequest;
-import org.apache.bookkeeper.stream.proto.storage.CreateNamespaceResponse;
-import org.apache.bookkeeper.stream.proto.storage.CreateStreamRequest;
-import org.apache.bookkeeper.stream.proto.storage.CreateStreamResponse;
-import org.apache.bookkeeper.stream.proto.storage.DeleteNamespaceRequest;
-import org.apache.bookkeeper.stream.proto.storage.DeleteNamespaceResponse;
-import org.apache.bookkeeper.stream.proto.storage.DeleteStreamRequest;
-import org.apache.bookkeeper.stream.proto.storage.DeleteStreamResponse;
-import org.apache.bookkeeper.stream.proto.storage.GetActiveRangesRequest;
-import org.apache.bookkeeper.stream.proto.storage.GetActiveRangesResponse;
-import org.apache.bookkeeper.stream.proto.storage.GetNamespaceRequest;
-import org.apache.bookkeeper.stream.proto.storage.GetNamespaceResponse;
-import org.apache.bookkeeper.stream.proto.storage.GetStreamRequest;
-import org.apache.bookkeeper.stream.proto.storage.GetStreamResponse;
-import org.apache.bookkeeper.stream.proto.storage.StatusCode;
+import org.apache.bookkeeper.stream.proto.kv.rpc.*;
+import org.apache.bookkeeper.stream.proto.storage.*;
 import org.apache.bookkeeper.stream.protocol.RangeId;
 import org.apache.bookkeeper.stream.protocol.util.StorageContainerPlacementPolicy;
 import org.apache.bookkeeper.stream.storage.api.kv.TableStore;
@@ -74,6 +41,11 @@ import org.apache.bookkeeper.stream.storage.impl.metadata.MetaRangeStoreImpl;
 import org.apache.bookkeeper.stream.storage.impl.metadata.RootRangeStoreFactory;
 import org.apache.bookkeeper.stream.storage.impl.metadata.RootRangeStoreImpl;
 import org.apache.bookkeeper.stream.storage.impl.store.MVCCStoreFactory;
+
+import java.util.List;
+import java.util.concurrent.CompletableFuture;
+
+import static org.apache.bookkeeper.stream.protocol.ProtocolConstants.*;
 
 /**
  * The service implementation running in a storage container.

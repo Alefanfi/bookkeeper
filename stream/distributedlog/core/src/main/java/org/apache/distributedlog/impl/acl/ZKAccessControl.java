@@ -17,13 +17,8 @@
  */
 package org.apache.distributedlog.impl.acl;
 
-import static java.nio.charset.StandardCharsets.UTF_8;
-
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Objects;
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.util.concurrent.CompletableFuture;
 import org.apache.distributedlog.ZooKeeperClient;
 import org.apache.distributedlog.thrift.AccessControlEntry;
 import org.apache.thrift.TException;
@@ -35,6 +30,12 @@ import org.apache.zookeeper.CreateMode;
 import org.apache.zookeeper.KeeperException;
 import org.apache.zookeeper.Watcher;
 import org.apache.zookeeper.data.Stat;
+
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.util.concurrent.CompletableFuture;
+
+import static java.nio.charset.StandardCharsets.UTF_8;
 
 /**
  * ZooKeeper Based AccessControl.

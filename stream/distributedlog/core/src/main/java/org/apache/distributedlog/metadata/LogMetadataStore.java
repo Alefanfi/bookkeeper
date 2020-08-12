@@ -18,11 +18,12 @@
 package org.apache.distributedlog.metadata;
 
 import com.google.common.annotations.Beta;
+import org.apache.distributedlog.callback.NamespaceListener;
+
 import java.net.URI;
 import java.util.Iterator;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
-import org.apache.distributedlog.callback.NamespaceListener;
 
 /**
  * Interface for log metadata store.

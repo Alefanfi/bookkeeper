@@ -17,21 +17,7 @@
  */
 package org.apache.distributedlog;
 
-import static com.google.common.base.Preconditions.checkArgument;
-import static org.apache.distributedlog.namespace.NamespaceDriver.Role.READER;
-import static org.apache.distributedlog.namespace.NamespaceDriver.Role.WRITER;
-
 import com.google.common.annotations.VisibleForTesting;
-import java.io.IOException;
-import java.net.URI;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
-import java.util.concurrent.CancellationException;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutorService;
-import java.util.function.Function;
 import org.apache.bookkeeper.common.concurrent.FutureEventListener;
 import org.apache.bookkeeper.common.concurrent.FutureUtils;
 import org.apache.bookkeeper.common.util.OrderedScheduler;
@@ -71,6 +57,21 @@ import org.apache.distributedlog.util.DLUtils;
 import org.apache.distributedlog.util.Utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.io.IOException;
+import java.net.URI;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
+import java.util.concurrent.CancellationException;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutorService;
+import java.util.function.Function;
+
+import static com.google.common.base.Preconditions.checkArgument;
+import static org.apache.distributedlog.namespace.NamespaceDriver.Role.READER;
+import static org.apache.distributedlog.namespace.NamespaceDriver.Role.WRITER;
 
 
 

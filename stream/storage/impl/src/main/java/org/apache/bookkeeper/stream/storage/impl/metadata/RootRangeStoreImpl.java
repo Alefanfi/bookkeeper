@@ -18,14 +18,7 @@
 
 package org.apache.bookkeeper.stream.storage.impl.metadata;
 
-import static java.nio.charset.StandardCharsets.UTF_8;
-import static org.apache.bookkeeper.stream.protocol.ProtocolConstants.MIN_DATA_STREAM_ID;
-import static org.apache.bookkeeper.stream.protocol.util.ProtoUtils.validateNamespaceName;
-import static org.apache.bookkeeper.stream.protocol.util.ProtoUtils.validateStreamName;
-
 import com.google.protobuf.InvalidProtocolBufferException;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ScheduledExecutorService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.bookkeeper.api.kv.op.CompareResult;
 import org.apache.bookkeeper.api.kv.op.RangeOp;
@@ -35,27 +28,19 @@ import org.apache.bookkeeper.api.kv.result.KeyValue;
 import org.apache.bookkeeper.common.concurrent.FutureUtils;
 import org.apache.bookkeeper.common.util.Bytes;
 import org.apache.bookkeeper.statelib.api.mvcc.MVCCAsyncStore;
-import org.apache.bookkeeper.stream.proto.NamespaceMetadata;
-import org.apache.bookkeeper.stream.proto.NamespaceProperties;
-import org.apache.bookkeeper.stream.proto.StreamConfiguration;
-import org.apache.bookkeeper.stream.proto.StreamName;
-import org.apache.bookkeeper.stream.proto.StreamProperties;
-import org.apache.bookkeeper.stream.proto.storage.CreateNamespaceRequest;
-import org.apache.bookkeeper.stream.proto.storage.CreateNamespaceResponse;
-import org.apache.bookkeeper.stream.proto.storage.CreateStreamRequest;
-import org.apache.bookkeeper.stream.proto.storage.CreateStreamResponse;
-import org.apache.bookkeeper.stream.proto.storage.DeleteNamespaceRequest;
-import org.apache.bookkeeper.stream.proto.storage.DeleteNamespaceResponse;
-import org.apache.bookkeeper.stream.proto.storage.DeleteStreamRequest;
-import org.apache.bookkeeper.stream.proto.storage.DeleteStreamResponse;
-import org.apache.bookkeeper.stream.proto.storage.GetNamespaceRequest;
-import org.apache.bookkeeper.stream.proto.storage.GetNamespaceResponse;
-import org.apache.bookkeeper.stream.proto.storage.GetStreamRequest;
+import org.apache.bookkeeper.stream.proto.*;
+import org.apache.bookkeeper.stream.proto.storage.*;
 import org.apache.bookkeeper.stream.proto.storage.GetStreamRequest.IdCase;
-import org.apache.bookkeeper.stream.proto.storage.GetStreamResponse;
-import org.apache.bookkeeper.stream.proto.storage.StatusCode;
 import org.apache.bookkeeper.stream.protocol.util.StorageContainerPlacementPolicy;
 import org.apache.bookkeeper.stream.storage.api.metadata.RootRangeStore;
+
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ScheduledExecutorService;
+
+import static java.nio.charset.StandardCharsets.UTF_8;
+import static org.apache.bookkeeper.stream.protocol.ProtocolConstants.MIN_DATA_STREAM_ID;
+import static org.apache.bookkeeper.stream.protocol.util.ProtoUtils.validateNamespaceName;
+import static org.apache.bookkeeper.stream.protocol.util.ProtoUtils.validateStreamName;
 
 /**
  * A statestore backed implementation of {@link RootRangeStore}.

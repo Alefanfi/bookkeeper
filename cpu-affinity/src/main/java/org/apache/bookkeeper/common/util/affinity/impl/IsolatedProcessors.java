@@ -22,6 +22,9 @@
 package org.apache.bookkeeper.common.util.affinity.impl;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import lombok.experimental.UtilityClass;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
@@ -32,11 +35,6 @@ import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.SortedSet;
 import java.util.TreeSet;
-
-import lombok.experimental.UtilityClass;
-import lombok.extern.slf4j.Slf4j;
-
-import org.apache.commons.lang3.StringUtils;
 
 @UtilityClass
 @Slf4j

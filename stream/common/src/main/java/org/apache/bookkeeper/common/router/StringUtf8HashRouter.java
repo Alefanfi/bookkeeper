@@ -17,10 +17,10 @@
  */
 package org.apache.bookkeeper.common.router;
 
-import static java.nio.charset.StandardCharsets.UTF_8;
-
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.PooledByteBufAllocator;
+
+import static java.nio.charset.StandardCharsets.UTF_8;
 
 /**
  * Compute a hash value for a utf8 string.
