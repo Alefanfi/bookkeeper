@@ -24,7 +24,7 @@ import org.apache.bookkeeper.zookeeper.BoundExponentialBackoffRetryPolicy;
 import org.apache.bookkeeper.zookeeper.RetryPolicy;
 import org.apache.distributedlog.util.FailpointUtils;
 import org.apache.distributedlog.zk.ZKWatcherManager;
-import org.apache.zookeeper.*;
+import org.apache.zookeeper.Watcher;
 import org.apache.zookeeper.Watcher.Event.EventType;
 import org.apache.zookeeper.Watcher.Event.KeeperState;
 import org.apache.zookeeper.data.ACL;

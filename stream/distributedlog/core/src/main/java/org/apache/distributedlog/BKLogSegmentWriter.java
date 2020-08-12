@@ -31,7 +31,6 @@ import org.apache.bookkeeper.common.concurrent.FutureUtils;
 import org.apache.bookkeeper.common.util.OrderedScheduler;
 import org.apache.bookkeeper.feature.Feature;
 import org.apache.bookkeeper.feature.FeatureProvider;
-import org.apache.bookkeeper.stats.*;
 import org.apache.bookkeeper.util.MathUtils;
 import org.apache.commons.lang3.mutable.MutableObject;
 import org.apache.distributedlog.Entry.Writer;
@@ -56,7 +55,6 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicIntegerFieldUpdater;
 import java.util.concurrent.atomic.AtomicReferenceFieldUpdater;
 import java.util.concurrent.locks.ReentrantLock;

@@ -39,7 +39,6 @@ import org.apache.bookkeeper.proto.BookieProtocol;
 import org.apache.bookkeeper.proto.BookkeeperInternalCallbacks.WriteCallback;
 import org.apache.bookkeeper.stats.NullStatsLogger;
 import org.apache.bookkeeper.util.ByteBufList;
-import org.apache.commons.cli.*;
 import org.apache.commons.lang.SystemUtils;
 import org.apache.zookeeper.KeeperException;
 import org.slf4j.Logger;

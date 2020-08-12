@@ -21,7 +21,6 @@
 
 package org.apache.bookkeeper.proto.checksum;
 
-import io.netty.buffer.*;
 import org.apache.bookkeeper.proto.DataFormats.LedgerMetadataFormat.DigestType;
 import org.openjdk.jmh.annotations.*;
 

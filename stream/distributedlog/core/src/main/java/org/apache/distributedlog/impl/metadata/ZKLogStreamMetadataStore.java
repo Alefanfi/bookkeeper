@@ -48,7 +48,6 @@ import org.apache.distributedlog.util.Transaction;
 import org.apache.distributedlog.util.Utils;
 import org.apache.distributedlog.zk.LimitedPermitManager;
 import org.apache.distributedlog.zk.ZKTransaction;
-import org.apache.zookeeper.*;
 import org.apache.zookeeper.KeeperException.Code;
 import org.apache.zookeeper.Op.Create;
 import org.apache.zookeeper.Op.Delete;

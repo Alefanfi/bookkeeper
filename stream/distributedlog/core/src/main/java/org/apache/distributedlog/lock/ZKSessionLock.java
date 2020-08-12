@@ -33,7 +33,6 @@ import org.apache.distributedlog.ZooKeeperClient;
 import org.apache.distributedlog.common.stats.OpStatsListener;
 import org.apache.distributedlog.exceptions.*;
 import org.apache.distributedlog.util.FailpointUtils;
-import org.apache.zookeeper.*;
 import org.apache.zookeeper.data.Stat;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

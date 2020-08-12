@@ -40,14 +40,12 @@ import org.apache.bookkeeper.statelib.impl.Bytes;
 import org.apache.bookkeeper.statelib.impl.rocksdb.RocksUtils;
 import org.apache.bookkeeper.statelib.impl.rocksdb.checkpoint.RocksCheckpointer;
 import org.apache.commons.lang3.tuple.Pair;
-import org.rocksdb.*;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.*;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.atomic.AtomicLongFieldUpdater;
 

@@ -19,8 +19,8 @@ package org.apache.distributedlog;
 
 import io.netty.channel.EventLoopGroup;
 import io.netty.util.HashedWheelTimer;
-import org.apache.bookkeeper.client.*;
 import org.apache.bookkeeper.client.BKException.Code;
+import org.apache.bookkeeper.client.BookKeeper;
 import org.apache.bookkeeper.common.concurrent.FutureUtils;
 import org.apache.bookkeeper.conf.ClientConfiguration;
 import org.apache.bookkeeper.feature.FeatureProvider;

@@ -20,7 +20,6 @@ package org.apache.distributedlog.impl.logsegment;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.collect.Lists;
 import io.netty.util.ReferenceCountUtil;
-import org.apache.bookkeeper.client.*;
 import org.apache.bookkeeper.common.concurrent.FutureUtils;
 import org.apache.bookkeeper.common.util.OrderedScheduler;
 import org.apache.bookkeeper.common.util.SafeRunnable;

@@ -19,7 +19,6 @@
 package org.apache.bookkeeper.tools.cli.commands;
 
 import org.apache.bookkeeper.tools.cli.BKCtl;
-import org.apache.bookkeeper.tools.cli.commands.bookie.*;
 import org.apache.bookkeeper.tools.cli.commands.bookies.EndpointInfoCommand;
 import org.apache.bookkeeper.tools.common.BKFlags;
 import org.apache.bookkeeper.tools.framework.CliCommandGroup;
