@@ -18,14 +18,15 @@
 
 package org.apache.bookkeeper.clients.impl.internal.api;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
-
 import com.google.common.collect.Maps;
-import java.util.NavigableMap;
 import org.apache.bookkeeper.stream.proto.RangeKeyType;
 import org.apache.bookkeeper.stream.proto.RangeProperties;
 import org.junit.Test;
+
+import java.util.NavigableMap;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 
 /**
  * Unit test for {@link StreamRanges}.

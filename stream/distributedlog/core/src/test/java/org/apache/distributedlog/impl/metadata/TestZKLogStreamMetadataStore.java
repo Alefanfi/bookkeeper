@@ -17,50 +17,14 @@
  */
 package org.apache.distributedlog.impl.metadata;
 
-import static java.nio.charset.StandardCharsets.UTF_8;
-import static org.apache.distributedlog.DistributedLogConstants.EMPTY_BYTES;
-import static org.apache.distributedlog.impl.metadata.ZKLogStreamMetadataStore.checkLogMetadataPaths;
-import static org.apache.distributedlog.impl.metadata.ZKLogStreamMetadataStore.getLog;
-import static org.apache.distributedlog.impl.metadata.ZKLogStreamMetadataStore.getLogSegments;
-import static org.apache.distributedlog.impl.metadata.ZKLogStreamMetadataStore.getMissingPaths;
-import static org.apache.distributedlog.impl.metadata.ZKLogStreamMetadataStore.intToBytes;
-import static org.apache.distributedlog.impl.metadata.ZKLogStreamMetadataStore.pathExists;
-import static org.apache.distributedlog.metadata.LogMetadata.ALLOCATION_PATH;
-import static org.apache.distributedlog.metadata.LogMetadata.LAYOUT_VERSION;
-import static org.apache.distributedlog.metadata.LogMetadata.LOCK_PATH;
-import static org.apache.distributedlog.metadata.LogMetadata.LOGSEGMENTS_PATH;
-import static org.apache.distributedlog.metadata.LogMetadata.MAX_TXID_PATH;
-import static org.apache.distributedlog.metadata.LogMetadata.READ_LOCK_PATH;
-import static org.apache.distributedlog.metadata.LogMetadata.VERSION_PATH;
-import static org.apache.distributedlog.metadata.LogMetadata.getLogRootPath;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyBoolean;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.doAnswer;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-
 import com.google.common.collect.Lists;
-import java.net.URI;
-import java.util.Collections;
-import java.util.List;
 import org.apache.bookkeeper.common.concurrent.FutureUtils;
 import org.apache.bookkeeper.common.util.OrderedScheduler;
 import org.apache.bookkeeper.stats.NullStatsLogger;
 import org.apache.bookkeeper.util.ZkUtils;
 import org.apache.bookkeeper.versioning.LongVersion;
 import org.apache.bookkeeper.versioning.Versioned;
-import org.apache.distributedlog.DLMTestUtil;
-import org.apache.distributedlog.DistributedLogConfiguration;
-import org.apache.distributedlog.DistributedLogConstants;
-import org.apache.distributedlog.LogSegmentMetadata;
-import org.apache.distributedlog.TestZooKeeperClientBuilder;
-import org.apache.distributedlog.ZooKeeperClient;
-import org.apache.distributedlog.ZooKeeperClusterTestCase;
+import org.apache.distributedlog.*;
 import org.apache.distributedlog.api.namespace.Namespace;
 import org.apache.distributedlog.api.namespace.NamespaceBuilder;
 import org.apache.distributedlog.exceptions.LockingException;
@@ -74,13 +38,9 @@ import org.apache.distributedlog.util.DLUtils;
 import org.apache.distributedlog.util.Utils;
 import org.apache.zookeeper.AsyncCallback.Children2Callback;
 import org.apache.zookeeper.AsyncCallback.StatCallback;
-import org.apache.zookeeper.CreateMode;
-import org.apache.zookeeper.KeeperException;
+import org.apache.zookeeper.*;
 import org.apache.zookeeper.KeeperException.Code;
-import org.apache.zookeeper.Transaction;
-import org.apache.zookeeper.ZooDefs;
 import org.apache.zookeeper.ZooDefs.Ids;
-import org.apache.zookeeper.ZooKeeper;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
@@ -88,6 +48,18 @@ import org.junit.Test;
 import org.junit.rules.TestName;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.net.URI;
+import java.util.Collections;
+import java.util.List;
+
+import static java.nio.charset.StandardCharsets.UTF_8;
+import static org.apache.distributedlog.DistributedLogConstants.EMPTY_BYTES;
+import static org.apache.distributedlog.impl.metadata.ZKLogStreamMetadataStore.*;
+import static org.apache.distributedlog.metadata.LogMetadata.*;
+import static org.junit.Assert.*;
+import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.Mockito.*;
 
 /**
  * Test {@link ZKLogStreamMetadataStore}.

@@ -17,38 +17,13 @@
  */
 package org.apache.distributedlog.lock;
 
-import static org.apache.distributedlog.lock.ZKSessionLock.areLockWaitersInSameSession;
-import static org.apache.distributedlog.lock.ZKSessionLock.asyncParseClientID;
-import static org.apache.distributedlog.lock.ZKSessionLock.getLockIdFromPath;
-import static org.apache.distributedlog.lock.ZKSessionLock.getLockPathPrefixV1;
-import static org.apache.distributedlog.lock.ZKSessionLock.getLockPathPrefixV2;
-import static org.apache.distributedlog.lock.ZKSessionLock.getLockPathPrefixV3;
-import static org.apache.distributedlog.lock.ZKSessionLock.parseMemberID;
-import static org.apache.distributedlog.lock.ZKSessionLock.serializeClientId;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-
-import java.io.IOException;
-import java.util.Collections;
-import java.util.List;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicInteger;
-import java.util.concurrent.atomic.AtomicReference;
 import org.apache.bookkeeper.common.util.OrderedScheduler;
 import org.apache.bookkeeper.stats.NullStatsLogger;
 import org.apache.commons.lang3.tuple.Pair;
-import org.apache.distributedlog.DLMTestUtil;
-import org.apache.distributedlog.ZooKeeperClient;
-import org.apache.distributedlog.ZooKeeperClientBuilder;
-import org.apache.distributedlog.ZooKeeperClientUtils;
-import org.apache.distributedlog.ZooKeeperClusterTestCase;
+import org.apache.distributedlog.*;
 import org.apache.distributedlog.exceptions.LockingException;
 import org.apache.distributedlog.exceptions.OwnershipAcquireFailedException;
-import org.apache.distributedlog.lock.ZKSessionLock.State;
+import org.apache.distributedlog.lock.ZKSessionLock.*;
 import org.apache.distributedlog.util.FailpointUtils;
 import org.apache.distributedlog.util.Utils;
 import org.apache.zookeeper.CreateMode;
@@ -62,6 +37,18 @@ import org.junit.Test;
 import org.junit.rules.TestName;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.io.IOException;
+import java.util.Collections;
+import java.util.List;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicReference;
+
+import static org.apache.distributedlog.lock.ZKSessionLock.*;
+import static org.junit.Assert.*;
 
 /**
  * Distributed Lock Tests.

@@ -18,9 +18,6 @@
 package org.apache.distributedlog;
 
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
-
 import org.apache.bookkeeper.feature.Feature;
 import org.apache.bookkeeper.feature.SettableFeature;
 import org.apache.bookkeeper.stats.NullStatsLogger;
@@ -29,6 +26,9 @@ import org.apache.distributedlog.util.SimplePermitLimiter;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 /**
  * Test Cases for {@link org.apache.distributedlog.util.SimplePermitLimiter}.

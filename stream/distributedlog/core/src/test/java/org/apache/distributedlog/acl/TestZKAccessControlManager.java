@@ -17,16 +17,7 @@
  */
 package org.apache.distributedlog.acl;
 
-import static org.junit.Assert.assertEquals;
-
-import java.net.URI;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import org.apache.distributedlog.DistributedLogConfiguration;
-import org.apache.distributedlog.TestZooKeeperClientBuilder;
-import org.apache.distributedlog.ZooKeeperClient;
-import org.apache.distributedlog.ZooKeeperClientUtils;
-import org.apache.distributedlog.ZooKeeperClusterTestCase;
+import org.apache.distributedlog.*;
 import org.apache.distributedlog.impl.acl.ZKAccessControl;
 import org.apache.distributedlog.impl.acl.ZKAccessControlManager;
 import org.apache.distributedlog.thrift.AccessControlEntry;
@@ -36,6 +27,12 @@ import org.junit.Before;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.net.URI;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+
+import static org.junit.Assert.assertEquals;
 
 
 /**

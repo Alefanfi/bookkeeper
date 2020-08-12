@@ -17,9 +17,6 @@
  */
 package org.apache.distributedlog;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
 import org.apache.bookkeeper.conf.ServerConfiguration;
 import org.apache.bookkeeper.discover.BookieServiceInfo;
 import org.apache.bookkeeper.proto.BookieServer;
@@ -28,6 +25,10 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Test Cases for RollLogSegments.
