@@ -10,20 +10,19 @@ public class AddEntry {
     private BookkeeperInternalCallbacks.WriteCallback writeCallback;
     private Object ctx;
     private byte[] key;
-    private Boolean valid;
     private Long ledgerId;
-    private Long entryId;
+    private long entryId = 12;
     private Boolean expected;
     private String content;
 
-    public AddEntry(ByteBuf entry, Boolean wayAckAsync, BookkeeperInternalCallbacks.WriteCallback writeCallback, Object ctx, byte[] masterkey, Boolean valid, Boolean expected) {
+    public AddEntry(ByteBuf entry, Boolean wayAckAsync, BookkeeperInternalCallbacks.WriteCallback writeCallback,
+                    Object ctx, byte[] masterkey, Boolean expected) {
 
         this.entry = entry;
         this.wayAckAsync = wayAckAsync;
         this.writeCallback = writeCallback;
         this.ctx = ctx;
         this.key = masterkey;
-        this.valid = valid;
         this.expected = expected;
     }
 
@@ -75,14 +74,6 @@ public class AddEntry {
         this.key = masterkey;
     }
 
-    public Boolean getValid() {
-        return valid;
-    }
-
-    public void setValid(Boolean valid) {
-        this.valid = valid;
-    }
-
     public Long getLedgerId() {
         return ledgerId;
     }
@@ -91,11 +82,11 @@ public class AddEntry {
         this.ledgerId = ledgerId;
     }
 
-    public Long getEntryId() {
+    public long getEntryId() {
         return entryId;
     }
 
-    public void setEntryId(Long entryId) {
+    public void setEntryId(long entryId) {
         this.entryId = entryId;
     }
 
