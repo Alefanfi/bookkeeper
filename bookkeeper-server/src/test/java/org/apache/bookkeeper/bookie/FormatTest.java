@@ -1,6 +1,5 @@
 package org.apache.bookkeeper.bookie;
 
-import org.apache.bookkeeper.bookie.entities.Format;
 import org.apache.bookkeeper.conf.ServerConfiguration;
 import org.junit.Assert;
 import org.junit.Test;
@@ -13,61 +12,64 @@ import java.util.Collection;
 @RunWith(value = Parameterized.class)
 public class FormatTest {
 
-    private Format formatTesting;
+    private ServerConfiguration conf;
+    private Boolean isInteractive;
+    private Boolean force;
+    private Boolean expected;
 
-    public FormatTest(Format formatTesting){
-        this.formatTesting = formatTesting;
+    private Boolean result;
+
+    public FormatTest(ServerConfiguration conf, Boolean isInteractive, Boolean force, Boolean expected){
+
+        this.conf = conf;
+        this.isInteractive = isInteractive;
+        this.force = force;
+        this.expected = expected;
     }
 
     @Parameterized.Parameters
-    public static Collection<Format> getParameters(){
+    public static Collection getParameters(){
 
-        return Arrays.asList(
+        return Arrays.asList(new Object[][]{
 
-                //new Format(new ServerConfiguration(), true, true, true),
-                new Format(null, true, false, false),
-                new Format(new ServerConfiguration(), false, true, true),
-                //new Format(new ServerConfiguration(), true, false, true) //Funziona
-                new Format(null, false, false, false)
-        );
+                {null, true, false, false},
+                {new ServerConfiguration(), false, true, true},
+                {null, false, false, false}/*
+                {new ServerConfiguration(), true, false, true},
+                {new ServerConfiguration(), true, true, true}*/
+
+        });
     }
 
+
     @Test
-    public void formatTest(){
-
-        Boolean success;
-
-        Boolean expected = formatTesting.getExpected();
-        ServerConfiguration conf = formatTesting.getConf();
+    public void test(){
 
         /**
-        if(conf!=null){
+         if(conf!=null){
 
-            conf.setLedgerDirNames(new String[]{"temp", "tester"});
-            File myFile =  new File("/tmp/bk-txn/test.txt");
-            try{
-                myFile.createNewFile();
+         conf.setLedgerDirNames(new String[]{"temp", "tester"});
+         File myFile =  new File("/tmp/bk-txn/test.txt");
+         try{
+         myFile.createNewFile();
 
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }*/
-
-        Boolean isInteractive = formatTesting.getInteractive();
-        Boolean force = formatTesting.getForce();
+         } catch (IOException e) {
+         e.printStackTrace();
+         }
+         }*/
 
         try {
-            success = Bookie.format(conf, isInteractive, force);
+            result = Bookie.format(conf, isInteractive, force);
 
         } catch (Exception e) {
 
-            success = false;
+            result = false;
 
         }
-        Assert.assertEquals(expected, success);
+
+        Assert.assertEquals(expected, result);
 
         //myFile.delete();
     }
-
 
 }
