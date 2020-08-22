@@ -1,6 +1,7 @@
 package org.apache.bookkeeper.bookie;
 
 import io.netty.buffer.ByteBuf;
+import io.netty.buffer.Unpooled;
 import org.apache.bookkeeper.bookie.entities.AddEntry;
 import org.apache.bookkeeper.client.BKException;
 import org.apache.bookkeeper.client.BookKeeper;
@@ -21,6 +22,8 @@ import java.util.Collection;
 public class AddEntryTest extends BookKeeperClusterTestCase {
 
     private AddEntry entry;
+
+    private Boolean actual;
 
     /**private static final BookkeeperInternalCallbacks.WriteCallback  writeCallback = new BookkeeperInternalCallbacks.WriteCallback() {
     @Override
@@ -48,16 +51,14 @@ public class AddEntryTest extends BookKeeperClusterTestCase {
         byte[] masterKey = "password".getBytes();
 
         return Arrays.asList(
-                new AddEntry(null,false, writeCallback,null, masterKey, false)
-                //new Entry(null,true,null,null, new byte[]{}, false),
-                //new Entry(Unpooled.buffer(), false, writeCallback,null,null, false)
+                new AddEntry(null,false, writeCallback,null, masterKey, false),
+                new AddEntry(Unpooled.buffer(),true,null,null, new byte[]{}, false),
+                new AddEntry(Unpooled.buffer(), false, writeCallback,null,masterKey, false)
         );
     }
 
     @Test
     public void test() throws BKException, InterruptedException {
-
-        Boolean result;
 
         Boolean expected = entry.getExpected();
 
@@ -69,15 +70,27 @@ public class AddEntryTest extends BookKeeperClusterTestCase {
         Bookie bookie = bs.get(0).getBookie();
 
         try {
-            bookie.addEntry(entry.getEntry(), false, writeCallback, null, entry.getKey());
+            if(entry != null) {
+
+                bookie.addEntry(entry.getEntry(), false, writeCallback, null, entry.getKey());
+
+            }else{
+
+                actual = false;
+
+            }
+
         } catch (IOException | BookieException | InterruptedException | NullPointerException e) {
+
+            actual = false;
+
             e.printStackTrace();
-            result = false;
+
         }
 
         try {
 
-            ByteBuf entryRead = bookie.readEntry(entry.getLedgerId(), entry.getEntryId());
+            ByteBuf entryRead = bookie.readEntry(ledgerID, entry.getEntryId());
 
             byte[] destination = new byte[entryRead.readableBytes()];
             entryRead.getBytes(0, destination);
@@ -87,15 +100,15 @@ public class AddEntryTest extends BookKeeperClusterTestCase {
             content = content.substring(content.length() - check.length());
 
             Assert.assertEquals(check, content);
-            result = true;
+            actual = true;
 
         } catch (IOException e) {
 
             e.printStackTrace();
 
-            result = false;
+            actual = false;
         }
 
-        Assert.assertEquals(expected,result);
+        Assert.assertEquals(expected,actual);
     }
 }
