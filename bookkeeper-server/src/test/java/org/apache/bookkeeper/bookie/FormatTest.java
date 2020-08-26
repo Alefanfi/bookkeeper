@@ -41,7 +41,6 @@ public class FormatTest {
         });
     }
 
-
     @Test
     public void test(){
 

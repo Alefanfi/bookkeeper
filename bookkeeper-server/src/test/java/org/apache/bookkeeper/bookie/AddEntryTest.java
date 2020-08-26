@@ -50,10 +50,12 @@ public class AddEntryTest extends BookKeeperClusterTestCase {
     public static Collection<AddEntry> getParameters(){
         byte[] masterKey = "password".getBytes();
 
+        ByteBuf validEntry = Unpooled.buffer();
+
         return Arrays.asList(
-                new AddEntry(null,false, writeCallback,null, masterKey, false),
-                new AddEntry(Unpooled.buffer(),true,null,null, new byte[]{}, false),
-                new AddEntry(Unpooled.buffer(), false, writeCallback,null,masterKey, false)
+                new AddEntry(null,false, writeCallback,null, masterKey, false, false),
+                new AddEntry(Unpooled.buffer(),true,null,null, new byte[]{}, false, false),
+                new AddEntry(validEntry, false, writeCallback,null, masterKey, true, true)
         );
     }
 
@@ -62,10 +64,20 @@ public class AddEntryTest extends BookKeeperClusterTestCase {
 
         Boolean expected = entry.getExpected();
 
+        String check = "tests";
+
         LedgerHandle ledger = bkc.createLedger(1, 1, BookKeeper.DigestType.CRC32, entry.getKey());
         Long ledgerID = ledger.getId();
 
         entry.setLedgerId(ledgerID);
+
+        if(entry.getValid() == true){
+
+            entry.getEntry().writeLong(ledgerID);
+            entry.getEntry().writeLong(entry.getEntryId());
+            entry.getEntry().writeBytes(check.getBytes());
+
+        }
 
         Bookie bookie = bs.get(0).getBookie();
 
@@ -95,7 +107,6 @@ public class AddEntryTest extends BookKeeperClusterTestCase {
             byte[] destination = new byte[entryRead.readableBytes()];
             entryRead.getBytes(0, destination);
 
-            String check = "tests";
             String content = new String(destination);
             content = content.substring(content.length() - check.length());
 

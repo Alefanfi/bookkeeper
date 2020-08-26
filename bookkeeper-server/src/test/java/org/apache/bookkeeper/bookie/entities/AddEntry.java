@@ -11,19 +11,29 @@ public class AddEntry {
     private Object ctx;
     private byte[] key;
     private Long ledgerId;
-    private long entryId = 12;
+    private long entryId = 12345;
     private Boolean expected;
     private String content;
+    private Boolean isValid;
 
     public AddEntry(ByteBuf entry, Boolean wayAckAsync, BookkeeperInternalCallbacks.WriteCallback writeCallback,
-                    Object ctx, byte[] masterkey, Boolean expected) {
+                    Object ctx, byte[] masterkey, Boolean isValiid, Boolean expected) {
 
         this.entry = entry;
         this.wayAckAsync = wayAckAsync;
         this.writeCallback = writeCallback;
         this.ctx = ctx;
         this.key = masterkey;
+        this.isValid = isValiid;
         this.expected = expected;
+    }
+
+    public Boolean getValid() {
+        return isValid;
+    }
+
+    public void setValid(Boolean valid) {
+        isValid = valid;
     }
 
     public String getContent() {
