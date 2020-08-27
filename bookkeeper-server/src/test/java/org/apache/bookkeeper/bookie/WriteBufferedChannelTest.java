@@ -4,6 +4,7 @@ import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufAllocator;
 import io.netty.buffer.Unpooled;
 import org.apache.bookkeeper.common.allocator.impl.ByteBufAllocatorBuilderImpl;
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -67,7 +68,6 @@ public class WriteBufferedChannelTest {
         }
     }
 
-
     @Parameterized.Parameters
     public static Collection getParameters() {
 
@@ -79,6 +79,13 @@ public class WriteBufferedChannelTest {
                 {Unpooled.buffer(0), true}
 
         });
+    }
+
+    @After
+    public void close() throws IOException {
+        if(destinationBufferedChannel != null) {
+            destinationBufferedChannel.close();
+        }
     }
 
     @Test
