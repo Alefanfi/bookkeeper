@@ -12,14 +12,12 @@ import java.util.Collection;
 @RunWith(value = Parameterized.class)
 public class FormatTest {
 
-    private ServerConfiguration conf;
-    private Boolean isInteractive;
-    private Boolean force;
-    private Boolean expected;
+    private final ServerConfiguration conf;
+    private final Boolean isInteractive;
+    private final Boolean force;
+    private final Object expected;
 
-    private Boolean result;
-
-    public FormatTest(ServerConfiguration conf, Boolean isInteractive, Boolean force, Boolean expected){
+    public FormatTest(ServerConfiguration conf, Boolean isInteractive, Boolean force, Object expected){
 
         this.conf = conf;
         this.isInteractive = isInteractive;
@@ -32,9 +30,9 @@ public class FormatTest {
 
         return Arrays.asList(new Object[][]{
 
-                {null, true, false, false},
+                {null, true, false, NullPointerException.class},
                 {new ServerConfiguration(), false, true, true},
-                {null, false, false, false}/*
+                {null, false, false, NullPointerException.class}/*
                 {new ServerConfiguration(), true, false, true},
                 {new ServerConfiguration(), true, true, true}*/
 
@@ -57,12 +55,13 @@ public class FormatTest {
          }
          }*/
 
+        Object result;
         try {
             result = Bookie.format(conf, isInteractive, force);
 
         } catch (Exception e) {
 
-            result = false;
+            result = e.getClass();
 
         }
 

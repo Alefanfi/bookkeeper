@@ -12,12 +12,12 @@ public class AddEntry {
     private byte[] key;
     private Long ledgerId;
     private long entryId = 12345;
-    private Boolean expected;
+    private Object expected;
     private String content;
     private Boolean isValid;
 
     public AddEntry(ByteBuf entry, Boolean wayAckAsync, BookkeeperInternalCallbacks.WriteCallback writeCallback,
-                    Object ctx, byte[] masterkey, Boolean isValiid, Boolean expected) {
+                    Object ctx, byte[] masterkey, Boolean isValiid, Object expected) {
 
         this.entry = entry;
         this.wayAckAsync = wayAckAsync;
@@ -100,11 +100,11 @@ public class AddEntry {
         this.entryId = entryId;
     }
 
-    public Boolean getExpected() {
+    public Object getExpected() {
         return expected;
     }
 
-    public void setExpected(Boolean expected) {
+    public void setExpected(Object expected) {
         this.expected = expected;
     }
 }

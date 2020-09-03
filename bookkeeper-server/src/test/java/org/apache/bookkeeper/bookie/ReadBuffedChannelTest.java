@@ -10,7 +10,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.util.Arrays;
@@ -20,19 +19,18 @@ import java.util.Random;
 @RunWith(value = Parameterized.class)
 public class ReadBuffedChannelTest {
 
-    private ByteBuf destinationBuffer;
+    private final ByteBuf destinationBuffer;
 
-    private long position;
-    private int length; //numero di bytes che leggo
+    private final long position;
+    private final int length; //numero di bytes che leggo
 
-    private Boolean result;
-    private Boolean expected;
+    private final Object expected;
 
     private BufferedChannel readerBufferedChannel;
 
     private byte[] bytes;
 
-    public ReadBuffedChannelTest(ByteBuf destinationBuffer, long position, int length, Boolean expected){
+    public ReadBuffedChannelTest(ByteBuf destinationBuffer, long position, int length, Object expected){
 
         this.destinationBuffer = destinationBuffer;
         this.length = length;
@@ -69,10 +67,9 @@ public class ReadBuffedChannelTest {
 
                 }*/
 
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
             } catch (IOException e) {
                 e.printStackTrace();
+
             }
         }
 
@@ -84,10 +81,10 @@ public class ReadBuffedChannelTest {
         return Arrays.asList(new Object[][]{
 
                 {Unpooled.buffer(), 1, 1, true},
-                {Unpooled.buffer(), -1, 2, false},
-                {Unpooled.buffer(), 2, 2, false},
-                {Unpooled.buffer().capacity(0), -1, -1, false},
-                {null, 0, 0, false}
+                {Unpooled.buffer(), -1, 2, IllegalArgumentException.class},
+                {Unpooled.buffer(), 2, 2, IOException.class},
+                {Unpooled.buffer().capacity(0), -1, -1, NullPointerException.class},
+                {null, 0, 0, NullPointerException.class}
 
 
         });
@@ -95,6 +92,8 @@ public class ReadBuffedChannelTest {
 
     @Test
     public void test(){
+
+        Object result;
 
         try{
 
@@ -130,8 +129,7 @@ public class ReadBuffedChannelTest {
 
 
         } catch (NullPointerException | IllegalArgumentException | IOException e) {
-            result = false;
-            e.printStackTrace();
+            result = e.getClass();
         }
 
         Assert.assertEquals(result, expected);

@@ -21,9 +21,9 @@ import java.util.Collection;
 @RunWith(value = Parameterized.class)
 public class AddEntryTest extends BookKeeperClusterTestCase {
 
-    private AddEntry entry;
+    private final AddEntry entry;
 
-    private Boolean actual;
+    private Object result;
 
     /**private static final BookkeeperInternalCallbacks.WriteCallback  writeCallback = new BookkeeperInternalCallbacks.WriteCallback() {
     @Override
@@ -62,7 +62,7 @@ public class AddEntryTest extends BookKeeperClusterTestCase {
     @Test
     public void test() throws BKException, InterruptedException {
 
-        Boolean expected = entry.getExpected();
+        Object expected = entry.getExpected();
 
         String check = "tests";
 
@@ -88,15 +88,13 @@ public class AddEntryTest extends BookKeeperClusterTestCase {
 
             }else{
 
-                actual = false;
+                result = false;
 
             }
 
         } catch (IOException | BookieException | InterruptedException | NullPointerException e) {
 
-            actual = false;
-
-            e.printStackTrace();
+            result = false;
 
         }
 
@@ -111,15 +109,13 @@ public class AddEntryTest extends BookKeeperClusterTestCase {
             content = content.substring(content.length() - check.length());
 
             Assert.assertEquals(check, content);
-            actual = true;
+            result = true;
 
         } catch (IOException e) {
 
-            e.printStackTrace();
-
-            actual = false;
+            result = false;
         }
 
-        Assert.assertEquals(expected,actual);
+        Assert.assertEquals(expected,result);
     }
 }

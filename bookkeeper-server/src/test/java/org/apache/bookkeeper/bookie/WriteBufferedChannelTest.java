@@ -11,7 +11,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.nio.ByteBuffer;
@@ -22,49 +21,39 @@ import java.util.Collection;
 @RunWith(value = Parameterized.class)
 public class WriteBufferedChannelTest {
 
-    private ByteBuf sourceBufferedChannel;
+    private final ByteBuf sourceBufferedChannel;
 
     private BufferedChannel destinationBufferedChannel;
 
-    private static Long valueToWrite = 15L;
+    private static final Long valueToWrite = 15L;
 
-    private Boolean result;
-    private Boolean expected;
+    private final Object expected;
 
-    public WriteBufferedChannelTest(ByteBuf sourceBufferedChannel, Boolean expected){
+    public WriteBufferedChannelTest(ByteBuf sourceBufferedChannel, Object expected){
 
         this.sourceBufferedChannel = sourceBufferedChannel;
         this.expected = expected;
     }
 
     @Before
-    public void setUp(){
+    public void setUp() throws IOException {
 
         if(sourceBufferedChannel != null){
 
             ByteBufAllocator allocator = new ByteBufAllocatorBuilderImpl().build();
 
-            try{
+            RandomAccessFile file = new RandomAccessFile("file.test", "rw");
+            FileChannel channel = file.getChannel();
 
-                RandomAccessFile file = new RandomAccessFile("file.test", "rw");
-                FileChannel channel = file.getChannel();
+            if(sourceBufferedChannel.capacity() == 33) {
 
-                if(sourceBufferedChannel.capacity() == 33) {
+                destinationBufferedChannel = new BufferedChannel(allocator, channel, 8, 8, 1L);
 
-                    destinationBufferedChannel = new BufferedChannel(allocator, channel, 8, 8, 1L);
+            }else{
 
-                }else{
+                destinationBufferedChannel = new BufferedChannel(allocator, channel, 32);
 
-                    destinationBufferedChannel = new BufferedChannel(allocator, channel, 32);
-
-                }
-
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
             }
-
         }
     }
 
@@ -74,7 +63,7 @@ public class WriteBufferedChannelTest {
         return Arrays.asList(new Object[][]{
 
                 {Unpooled.buffer(), true},
-                {null, false},
+                {null, NullPointerException.class},
                 {Unpooled.buffer(33), true},
                 {Unpooled.buffer(0), true}
 
@@ -90,6 +79,8 @@ public class WriteBufferedChannelTest {
 
     @Test
     public void test(){
+
+        Object result;
 
         try{
             destinationBufferedChannel.write(sourceBufferedChannel);
@@ -117,8 +108,8 @@ public class WriteBufferedChannelTest {
             }
 
         } catch (IOException | NullPointerException e) {
-            e.printStackTrace();
-            result = false;;
+
+            result = e.getClass();;
         }
 
         Assert.assertEquals(result, expected);
@@ -130,12 +121,7 @@ public class WriteBufferedChannelTest {
 
         ByteBuffer buff = ByteBuffer.wrap(check);
 
-        if(buff.getLong() == valueToWrite){
-            return true;
-        }else{
-            return false;
-        }
-
+        return buff.getLong() == valueToWrite;
     }
 
 }
