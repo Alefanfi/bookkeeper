@@ -34,12 +34,16 @@ public class FormatTest {
         String[] journalDir = {"dir", "dir2"};
         server.setJournalDirsName(journalDir);
 
+
         return Arrays.asList(new Object[][]{
 
                 {null, true, false, NullPointerException.class},
                 {new ServerConfiguration(), false, true, true},
                 {new ServerConfiguration(), false, false, false},
-                {server, false, true, true}
+                {server, false, true, true},
+                {server, false, false, true},
+                {server, true, false, true},
+
                 //{new ServerConfiguration(), true, false, true},
                 //{new ServerConfiguration(), true, true, true}
 
@@ -62,7 +66,7 @@ public class FormatTest {
 
              } catch (IOException e) {
 
-                 result = e.getClass();
+                 e.printStackTrace();
              }
 
         }
