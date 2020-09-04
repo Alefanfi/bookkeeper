@@ -30,11 +30,16 @@ public class FormatTest {
     @Parameterized.Parameters
     public static Collection getParameters(){
 
+        ServerConfiguration server = new ServerConfiguration();
+        String[] journalDir = {"dir", "dir2"};
+        server.setJournalDirsName(journalDir);
+
         return Arrays.asList(new Object[][]{
 
                 {null, true, false, NullPointerException.class},
                 {new ServerConfiguration(), false, true, true},
-                {new ServerConfiguration(), false, false, true},
+                {new ServerConfiguration(), false, false, false},
+                {server, false, true, true}
                 //{new ServerConfiguration(), true, false, true},
                 //{new ServerConfiguration(), true, true, true}
 
@@ -50,7 +55,9 @@ public class FormatTest {
 
              conf.setLedgerDirNames(new String[]{"temp", "tester"});
              File myFile =  new File("/tmp/bk-txn/test.txt");
+
              try{
+
                  myFile.createNewFile();
 
              } catch (IOException e) {
@@ -58,7 +65,6 @@ public class FormatTest {
                  result = e.getClass();
              }
 
-            myFile.delete();
         }
 
         try {
