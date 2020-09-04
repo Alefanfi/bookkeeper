@@ -6,6 +6,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collection;
 
@@ -42,20 +44,23 @@ public class FormatTest {
     @Test
     public void test(){
 
-        /**
-         if(conf!=null){
-
-         conf.setLedgerDirNames(new String[]{"temp", "tester"});
-         File myFile =  new File("/tmp/bk-txn/test.txt");
-         try{
-         myFile.createNewFile();
-
-         } catch (IOException e) {
-         e.printStackTrace();
-         }
-         }*/
-
         Object result;
+
+        if(conf != null){
+
+             conf.setLedgerDirNames(new String[]{"temp", "tester"});
+             File myFile =  new File("/tmp/bk-txn/test.txt");
+             try{
+                 myFile.createNewFile();
+
+             } catch (IOException e) {
+
+                 result = e.getClass();
+             }
+
+            myFile.delete();
+        }
+
         try {
             result = Bookie.format(conf, isInteractive, force);
 
@@ -67,7 +72,6 @@ public class FormatTest {
 
         Assert.assertEquals(expected, result);
 
-        //myFile.delete();
     }
 
 }
