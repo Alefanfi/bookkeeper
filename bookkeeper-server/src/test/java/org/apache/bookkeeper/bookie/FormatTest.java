@@ -34,7 +34,6 @@ public class FormatTest {
         String[] journalDir = {"dir", "dir2"};
         server.setJournalDirsName(journalDir);
 
-
         return Arrays.asList(new Object[][]{
 
                 {null, true, false, NullPointerException.class},
@@ -43,6 +42,7 @@ public class FormatTest {
                 {server, false, true, true},
                 {server, false, false, true},
                 {server, true, false, true},
+                {server, false, false, true},
 
                 //{new ServerConfiguration(), true, false, true},
                 //{new ServerConfiguration(), true, true, true}
