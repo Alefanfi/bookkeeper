@@ -23,8 +23,6 @@ public class AddEntryTest extends BookKeeperClusterTestCase {
 
     private final AddEntry entry;
 
-    private Object result;
-
     /**private static final BookkeeperInternalCallbacks.WriteCallback  writeCallback = new BookkeeperInternalCallbacks.WriteCallback() {
     @Override
     public void writeComplete(int rc, long ledgerId, long entryId, BookieSocketAddress addr, Object ctx) {
@@ -53,9 +51,11 @@ public class AddEntryTest extends BookKeeperClusterTestCase {
         ByteBuf validEntry = Unpooled.buffer();
 
         return Arrays.asList(
+
                 new AddEntry(null,false, writeCallback,null, masterKey, false, false),
-                new AddEntry(Unpooled.buffer(),true,null,null, new byte[]{}, false, false),
+                new AddEntry(Unpooled.buffer(),true,null,12345, new byte[]{}, false, false),
                 new AddEntry(validEntry, false, writeCallback,null, masterKey, true, true)
+
         );
     }
 
@@ -67,7 +67,7 @@ public class AddEntryTest extends BookKeeperClusterTestCase {
         String check = "tests";
 
         LedgerHandle ledger = bkc.createLedger(1, 1, BookKeeper.DigestType.CRC32, entry.getKey());
-        Long ledgerID = ledger.getId();
+        long ledgerID = ledger.getId();
 
         entry.setLedgerId(ledgerID);
 
@@ -81,6 +81,7 @@ public class AddEntryTest extends BookKeeperClusterTestCase {
 
         Bookie bookie = bs.get(0).getBookie();
 
+        Object result;
         try {
             if(entry != null) {
 
@@ -116,6 +117,6 @@ public class AddEntryTest extends BookKeeperClusterTestCase {
             result = false;
         }
 
-        Assert.assertEquals(expected,result);
+        Assert.assertEquals(expected, result);
     }
 }

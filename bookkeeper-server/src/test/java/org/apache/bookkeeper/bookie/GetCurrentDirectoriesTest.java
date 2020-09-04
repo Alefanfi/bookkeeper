@@ -15,12 +15,11 @@ import java.util.List;
 @RunWith(value = Parameterized.class)
 public class GetCurrentDirectoriesTest {
 
-    private File[] listFile;
-    private Boolean expected;
-    private Boolean result;
+    private final File[] listFile;
+    private final Object expected;
     private List<File> elenco;
 
-    public GetCurrentDirectoriesTest(Boolean expected, File[] listFile){
+    public GetCurrentDirectoriesTest(Object expected, File[] listFile){
         this.expected =  expected;
         this.listFile = listFile;
     }
@@ -31,7 +30,7 @@ public class GetCurrentDirectoriesTest {
         return Arrays.asList(new Object[][]{
 
                 {true, new File[]{}},
-                {false, null},
+                {NullPointerException.class, null},
                 {true, new File[]{new File("file1"), new File("file2")}}
 
         });
@@ -51,6 +50,7 @@ public class GetCurrentDirectoriesTest {
     @Test
     public void test(){
 
+        Object result;
         try{
 
             File[] listFileTest = Bookie.getCurrentDirectories(listFile);
@@ -73,7 +73,7 @@ public class GetCurrentDirectoriesTest {
 
         } catch (Exception e){
 
-            result = false;
+            result = e.getClass();
         }
 
         Assert.assertEquals(expected, result);

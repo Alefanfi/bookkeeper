@@ -45,15 +45,8 @@ public class WriteBufferedChannelTest {
             RandomAccessFile file = new RandomAccessFile("file.test", "rw");
             FileChannel channel = file.getChannel();
 
-            if(sourceBufferedChannel.capacity() == 33) {
+            destinationBufferedChannel = new BufferedChannel(allocator, channel, 32);
 
-                destinationBufferedChannel = new BufferedChannel(allocator, channel, 8, 8, 1L);
-
-            }else{
-
-                destinationBufferedChannel = new BufferedChannel(allocator, channel, 32);
-
-            }
         }
     }
 
@@ -64,8 +57,9 @@ public class WriteBufferedChannelTest {
 
                 {Unpooled.buffer(), true},
                 {null, NullPointerException.class},
-                {Unpooled.buffer(33), true},
-                {Unpooled.buffer(0), true}
+                {Unpooled.buffer(0), true},
+                {Unpooled.buffer().capacity(1024), true},
+                {Unpooled.buffer().writeLong(valueToWrite.byteValue()), true}
 
         });
     }

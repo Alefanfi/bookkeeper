@@ -32,9 +32,9 @@ public class FormatTest {
 
                 {null, true, false, NullPointerException.class},
                 {new ServerConfiguration(), false, true, true},
-                {null, false, false, NullPointerException.class}/*
-                {new ServerConfiguration(), true, false, true},
-                {new ServerConfiguration(), true, true, true}*/
+                {new ServerConfiguration(), false, false, true},
+                //{new ServerConfiguration(), true, false, true},
+                //{new ServerConfiguration(), true, true, true}
 
         });
     }

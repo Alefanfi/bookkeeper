@@ -57,7 +57,7 @@ public class ReadBuffedChannelTest {
                     d.writeBytes(bytes);
                     readerBufferedChannel.write(d);
 
-                } /*else if(position > 1){
+                } else if(position > 1){
 
                     ByteBuf d = Unpooled.buffer();
                     bytes = new byte[Math.toIntExact(position)];
@@ -65,7 +65,7 @@ public class ReadBuffedChannelTest {
                     d.writeBytes(bytes);
                     readerBufferedChannel.write(d);
 
-                }*/
+                }
 
             } catch (IOException e) {
                 e.printStackTrace();
@@ -78,14 +78,20 @@ public class ReadBuffedChannelTest {
     @Parameterized.Parameters
     public  static Collection getParameters() {
 
+        ByteBuf buf = Unpooled.buffer();
+        byte[] temp = new byte[buf.capacity()];
+        new Random().nextBytes(temp);
+        buf.writeBytes(temp);
+
         return Arrays.asList(new Object[][]{
 
                 {Unpooled.buffer(), 1, 1, true},
                 {Unpooled.buffer(), -1, 2, IllegalArgumentException.class},
                 {Unpooled.buffer(), 2, 2, IOException.class},
                 {Unpooled.buffer().capacity(0), -1, -1, NullPointerException.class},
-                {null, 0, 0, NullPointerException.class}
-
+                {null, 0, 0, NullPointerException.class},
+                {Unpooled.buffer(1024), 1, 2, true},
+                {buf, 1, 1, IOException.class}
 
         });
     }
