@@ -26,6 +26,7 @@ public class FormatTest {
     private File myFile;
 
     private static String[] journalDir;
+    private static String[] journalDir2;
 
     public FormatTest(ServerConfiguration conf, Boolean isInteractive, Boolean force, Object expected, Boolean setDir){
 
@@ -50,6 +51,11 @@ public class FormatTest {
         dir2.mkdir();
         new File(dir2, "test2.txt");**/
 
+        ServerConfiguration server2 = new ServerConfiguration();
+        journalDir2 = new String[]{};
+        server2.setJournalDirsName(journalDir2);
+
+
         return Arrays.asList(new Object[][]{
 
                 {null, true, false, NullPointerException.class, true},
@@ -65,6 +71,10 @@ public class FormatTest {
                 {new ServerConfiguration(), false, true, true, false},
                 {new ServerConfiguration(), false, false, true, false},
                 //{new ServerConfiguration(), true, true, true, false}, //Are you sure to format?
+
+                {server2, false, true, true, true},
+                {server2, false, false, false, true},
+                {server2, false, false, false, false}
 
         });
     }
