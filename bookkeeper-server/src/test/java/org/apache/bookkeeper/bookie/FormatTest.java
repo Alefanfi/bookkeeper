@@ -58,10 +58,12 @@ public class FormatTest {
                 {server, false, true, true, true},
                 {server, false, false, true, true},
                 {server, true, false, true, true},
+                {server, true, false, true, false},
                 {server, true, true, true, true},
-                {server, false, false, true,  true},
+                {server, false, false, true, false},
                 {new ServerConfiguration(), false, false, false, false},
                 {new ServerConfiguration(), false, true, true, false},
+                {new ServerConfiguration(), false, false, true, false},
                 //{new ServerConfiguration(), true, true, true, false}, //Are you sure to format?
 
         });
