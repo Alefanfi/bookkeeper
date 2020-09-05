@@ -43,6 +43,12 @@ public class FormatTest {
         ServerConfiguration server = new ServerConfiguration();
         journalDir = new String[]{"dir", "dir2"};
         server.setJournalDirsName(journalDir);
+        File dir = new File("dir");
+        dir.mkdir();
+        new File(dir, "test.txt");
+        File dir2 = new File("dir2");
+        dir2.mkdir();
+        new File(dir2, "test2.txt");
 
 
         return Arrays.asList(new Object[][]{
