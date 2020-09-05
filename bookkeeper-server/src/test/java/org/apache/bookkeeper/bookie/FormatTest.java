@@ -6,7 +6,9 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collection;
@@ -33,28 +35,12 @@ public class FormatTest {
         ServerConfiguration server = new ServerConfiguration();
         String[] journalDir = {"dir", "dir2"};
         server.setJournalDirsName(journalDir);
-/*
-        ServerConfiguration server2 = new ServerConfiguration();
-        Scanner sc = new Scanner(System.in);
-        String path = sc.next();
-        path = path+sc.next();
-        File dir = new File(path);
-        dir.mkdir();
-        String fileName="generate required fileName";
-        File tagFile=new File(dir,fileName+".txt");
-        if(!tagFile.exists()){
-            tagFile.createNewFile();
-        }
-
-        String[] dirName = {path};
-        server2.setJournalDirsName(dirName);*/
-
 
         return Arrays.asList(new Object[][]{
 
                 {null, true, false, NullPointerException.class},
                 {new ServerConfiguration(), false, true, true},
-                {new ServerConfiguration(), false, false, true},
+                {new ServerConfiguration(), false, false, false},
                 {server, false, true, true},
                 {server, false, false, true},
                 {server, true, false, true},
@@ -76,11 +62,14 @@ public class FormatTest {
         if(conf != null){
 
              conf.setLedgerDirNames(new String[]{"temp", "tester"});
-             File myFile =  new File("/temp/bk-txn/test.txt");
+             File myFile =  new File("/tmp/bk-txn/test.txt");
 
              try{
 
                  myFile.createNewFile();
+
+                 BufferedWriter writer = new BufferedWriter(new FileWriter(myFile));
+                 writer.write("Hello world!");
 
              } catch (IOException e) {
 
