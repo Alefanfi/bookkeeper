@@ -64,6 +64,7 @@ public class FormatTest {
     @After
     public void afterFunction() throws IOException {
 
+        //delete folder
         FileUtils.deleteDirectory(new File("dir"));
         FileUtils.deleteDirectory(new File("dir2"));
 
