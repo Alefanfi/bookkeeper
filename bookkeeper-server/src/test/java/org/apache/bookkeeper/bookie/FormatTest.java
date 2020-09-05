@@ -28,21 +28,39 @@ public class FormatTest {
     }
 
     @Parameterized.Parameters
-    public static Collection getParameters(){
+    public static Collection getParameters() throws IOException {
 
         ServerConfiguration server = new ServerConfiguration();
         String[] journalDir = {"dir", "dir2"};
         server.setJournalDirsName(journalDir);
+/*
+        ServerConfiguration server2 = new ServerConfiguration();
+        Scanner sc = new Scanner(System.in);
+        String path = sc.next();
+        path = path+sc.next();
+        File dir = new File(path);
+        dir.mkdir();
+        String fileName="generate required fileName";
+        File tagFile=new File(dir,fileName+".txt");
+        if(!tagFile.exists()){
+            tagFile.createNewFile();
+        }
+
+        String[] dirName = {path};
+        server2.setJournalDirsName(dirName);*/
+
 
         return Arrays.asList(new Object[][]{
 
                 {null, true, false, NullPointerException.class},
                 {new ServerConfiguration(), false, true, true},
-                {new ServerConfiguration(), false, false, false},
+                {new ServerConfiguration(), false, false, true},
                 {server, false, true, true},
                 {server, false, false, true},
                 {server, true, false, true},
                 {server, false, false, true},
+
+                //{server2, false, false, true},
 
                 //{new ServerConfiguration(), true, false, true},
                 //{new ServerConfiguration(), true, true, true}
@@ -58,7 +76,7 @@ public class FormatTest {
         if(conf != null){
 
              conf.setLedgerDirNames(new String[]{"temp", "tester"});
-             File myFile =  new File("/tmp/bk-txn/test.txt");
+             File myFile =  new File("/temp/bk-txn/test.txt");
 
              try{
 
