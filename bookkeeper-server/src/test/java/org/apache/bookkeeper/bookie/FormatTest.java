@@ -20,13 +20,15 @@ public class FormatTest {
     private final Boolean isInteractive;
     private final Boolean force;
     private final Object expected;
+    private final Boolean writeFile;
 
-    public FormatTest(ServerConfiguration conf, Boolean isInteractive, Boolean force, Object expected){
+    public FormatTest(ServerConfiguration conf, Boolean isInteractive, Boolean force, Object expected, Boolean writeFile){
 
         this.conf = conf;
         this.isInteractive = isInteractive;
         this.force = force;
         this.expected = expected;
+        this.writeFile = writeFile;
     }
 
     @Parameterized.Parameters
@@ -38,15 +40,13 @@ public class FormatTest {
 
         return Arrays.asList(new Object[][]{
 
-                {null, true, false, NullPointerException.class},
-                {new ServerConfiguration(), false, true, true},
-                {new ServerConfiguration(), false, false, false},
-                {server, false, true, true},
-                {server, false, false, true},
-                {server, true, false, true},
-                {server, false, false, true},
-
-                //{server2, false, false, true},
+                {null, true, false, NullPointerException.class, false},
+                {new ServerConfiguration(), false, true, true, true},
+                {new ServerConfiguration(), false, false, false, true},
+                {server, false, true, true, true},
+                {server, false, false, true, true},
+                {server, true, false, true, true},
+                {server, false, false, true, false},
 
                 //{new ServerConfiguration(), true, false, true},
                 //{new ServerConfiguration(), true, true, true}
@@ -68,8 +68,12 @@ public class FormatTest {
 
                  myFile.createNewFile();
 
-                 BufferedWriter writer = new BufferedWriter(new FileWriter(myFile));
-                 writer.write("Hello world!");
+                 if(writeFile) {
+
+                     BufferedWriter writer = new BufferedWriter(new FileWriter(myFile));
+                     writer.write("Hello world!");
+
+                 }
 
              } catch (IOException e) {
 
