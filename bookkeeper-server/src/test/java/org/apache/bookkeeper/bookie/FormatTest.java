@@ -46,6 +46,7 @@ public class FormatTest {
         File dir = new File("dir");
         dir.mkdir();
         new File(dir, "test.txt");
+        new File(dir, "tested.txt");
         File dir2 = new File("dir2");
         dir2.mkdir();
         new File(dir2, "test2.txt");
