@@ -29,6 +29,8 @@ public class GetCurrentDirectoriesTest {
 
         return Arrays.asList(new Object[][]{
 
+                //coverage di tutto il metodo
+
                 {true, new File[]{}},
                 {NullPointerException.class, null},
                 {true, new File[]{new File("file1"), new File("file2")}}

@@ -1,6 +1,8 @@
 package org.apache.bookkeeper.bookie;
 
 import org.apache.bookkeeper.conf.ServerConfiguration;
+import org.apache.commons.io.FileUtils;
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -22,6 +24,10 @@ public class FormatTest {
     private final Object expected;
     private final Boolean writeFile;
 
+    private File myFile;
+
+    private static String[] journalDir;
+
     public FormatTest(ServerConfiguration conf, Boolean isInteractive, Boolean force, Object expected, Boolean writeFile){
 
         this.conf = conf;
@@ -32,11 +38,12 @@ public class FormatTest {
     }
 
     @Parameterized.Parameters
-    public static Collection getParameters() throws IOException {
+    public static Collection getParameters(){
 
         ServerConfiguration server = new ServerConfiguration();
-        String[] journalDir = {"dir", "dir2"};
+        journalDir = new String[]{"dir", "dir2"};
         server.setJournalDirsName(journalDir);
+
 
         return Arrays.asList(new Object[][]{
 
@@ -54,6 +61,14 @@ public class FormatTest {
         });
     }
 
+    @After
+    public void afterFunction() throws IOException {
+
+        FileUtils.deleteDirectory(new File("dir"));
+        FileUtils.deleteDirectory(new File("dir2"));
+
+    }
+
     @Test
     public void test(){
 
@@ -62,7 +77,7 @@ public class FormatTest {
         if(conf != null){
 
              conf.setLedgerDirNames(new String[]{"temp", "tester"});
-             File myFile =  new File("/tmp/bk-txn/test.txt");
+             myFile =  new File("/tmp/bk-txn/test.txt");
 
              try{
 
