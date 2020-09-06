@@ -176,4 +176,28 @@
     </dependency>
   </dependencies>
 
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.pitest</groupId>
+        <artifactId>pitest-maven</artifactId>
+        <version>1.4.11</version>
+        <configuration>
+          <targetClasses>
+            <param>org.apache.bookkeeper.bookie.BufferedChannel</param>
+            <param>org.apache.bookkeeper.bookie.Bookie</param>
+          </targetClasses>
+          <targetTests>
+            <param>org.apache.bookkeeper.bookie.AddEntryTest</param>
+            <param>org.apache.bookkeeper.bookie.FormatTest</param>
+            <param>org.apache.bookkeeper.bookie.GetCurrentDirectoriesTest</param>
+            <param>org.apache.bookkeeper.bookie.ReadBuffedChannelTest</param>
+            <param>org.apache.bookkeeper.bookie.WriteBufferedChannelTest</param>
+          </targetTests>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+
+
 </project>

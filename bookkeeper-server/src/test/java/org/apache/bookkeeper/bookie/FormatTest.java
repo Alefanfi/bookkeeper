@@ -87,6 +87,10 @@ public class FormatTest {
             FileUtils.deleteDirectory(new File("dir"));
         }else if(new File("dir2").exists()) {
             FileUtils.deleteDirectory(new File("dir2"));
+        }else if(new File("temp").exists()) {
+            FileUtils.deleteDirectory(new File("dir2"));
+        }else if(new File("tester").exists()) {
+            FileUtils.deleteDirectory(new File("dir2"));
         }
 
     }
