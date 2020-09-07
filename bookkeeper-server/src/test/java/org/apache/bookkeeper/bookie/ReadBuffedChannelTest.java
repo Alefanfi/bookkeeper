@@ -4,12 +4,14 @@ import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufAllocator;
 import io.netty.buffer.Unpooled;
 import org.apache.bookkeeper.common.allocator.impl.ByteBufAllocatorBuilderImpl;
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.util.Arrays;
@@ -73,6 +75,15 @@ public class ReadBuffedChannelTest {
             }
         }
 
+    }
+    @After
+    public void close(){
+
+        if(length > 0){
+            File f = new File("file.test");
+            f.delete();
+
+        }
     }
 
     @Parameterized.Parameters
